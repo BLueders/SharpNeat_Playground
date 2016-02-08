@@ -8,6 +8,8 @@ using System.Xml;
 using log4net.Config;
 using SharpNeat.EvolutionAlgorithms;
 using SharpNeat.Genomes.Neat;
+using SharpNeat.Core;
+using SharpNeat.Phenomes;
 
 namespace NeatSine
 {
@@ -39,8 +41,40 @@ namespace NeatSine
             // Hit return to quit.
             Console.ReadLine();
 
+            // Get a genome decoder that can convert genomes to phenomes.
+            IGenomeDecoder<NeatGenome, IBlackBox> decoder = experiment.CreateGenomeDecoder();
+
+            // Get the champion genome
             NeatGenome champion = _ea.CurrentChampGenome;
+
+            TestGenome(decoder, champion);
             
+        }
+
+        private static void TestGenome(IGenomeDecoder<NeatGenome, IBlackBox> decoder, NeatGenome genome)
+        {
+            // Decode the genome into a phenome (neural network).
+            IBlackBox phenome = decoder.Decode(genome);
+
+            List<string> lines = new List<string>();
+
+            double v = 0f;
+            while (v < Math.PI)
+            {
+                phenome.ResetState();
+
+                phenome.InputSignalArray[0] = v;
+
+                phenome.Activate();
+
+                double result = phenome.OutputSignalArray[0];
+
+                lines.Add(string.Format("{0}\t{1}", v, result));
+
+                v += 0.1d;
+            }
+
+            System.IO.File.WriteAllLines(@"output.csv", lines);
         }
 
         private static void ea_UpdateEvent(object sender, EventArgs e)
