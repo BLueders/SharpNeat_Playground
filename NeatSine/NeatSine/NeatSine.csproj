@@ -57,6 +57,7 @@
     <Compile Include="SimpleNeatExperiment.cs" />
     <Compile Include="SineEvaluator.cs" />
     <Compile Include="SineExperiment.cs" />
+    <Compile Include="ThreadSafeRandom.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

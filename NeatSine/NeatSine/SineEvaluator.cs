@@ -12,7 +12,6 @@ namespace NeatSine
     /// </summary>
     public class SineEvaluator : IPhenomeEvaluator<IBlackBox>
     {
-        private static readonly Random Rand = new Random();
         private ulong _evaluationCount;
         private bool _stopConditionSatisfied;
 
@@ -49,11 +48,12 @@ namespace NeatSine
         public FitnessInfo Evaluate(IBlackBox box)
         {
             double fitness = 0;
-            
+
 
             for (int i = 0; i < _testCount; i++)
             {
-                double randomVal = Rand.NextDouble() * Math.PI * 2;
+                //double nextDouble = ThreadSafeRandom.NextDouble();
+                double randomVal = ((double)i /(double)_testCount)*Math.PI*4 - Math.PI*2;
                 double actualVal = Math.Sin(randomVal);
 
                 box.ResetState();
@@ -62,8 +62,15 @@ namespace NeatSine
 
                 double neatVal = box.OutputSignalArray[0];
                 double diff = Math.Abs(actualVal - neatVal);
-                diff = diff > 1 ? 1 : diff;
+                if (diff > 1)
+                {
+                    diff = 1;
+                }
                 fitness += (1 - diff);
+                //if (Math.Abs(actualVal - neatVal) < 0.00001d)
+                //{
+                //    Console.WriteLine(nextDouble.ToString("0.00000") + " \t " + randomVal.ToString("0.00000") + " \t " + actualVal.ToString("0.00000") + " \t " + neatVal.ToString("0.00000"));
+                //}
             }
             _evaluationCount++;
 
