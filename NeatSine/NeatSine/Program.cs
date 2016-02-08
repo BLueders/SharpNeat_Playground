@@ -59,7 +59,7 @@ namespace NeatSine
             List<string> lines = new List<string>();
 
             double v = 0f;
-            while (v < Math.PI)
+            while (v < Math.PI * 2f)
             {
                 phenome.ResetState();
 
