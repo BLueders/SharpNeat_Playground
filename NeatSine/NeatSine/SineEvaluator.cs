@@ -53,7 +53,7 @@ namespace NeatSine
 
             for (int i = 0; i < _testCount; i++)
             {
-                double randomVal = (Rand.NextDouble() * Math.PI * 2) - Math.PI;
+                double randomVal = Rand.NextDouble() * Math.PI * 2;
                 double actualVal = Math.Sin(randomVal);
 
                 box.ResetState();
@@ -61,10 +61,10 @@ namespace NeatSine
                 box.Activate();
 
                 double neatVal = box.OutputSignalArray[0];
-
-                fitness += (1 - Math.Abs(actualVal - neatVal));
+                double diff = Math.Abs(actualVal - neatVal);
+                diff = diff > 1 ? 1 : diff;
+                fitness += (1 - diff);
             }
-
             _evaluationCount++;
 
             if (fitness >= _testCount) _stopConditionSatisfied = true;
