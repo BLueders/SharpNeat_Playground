@@ -1,0 +1,27 @@
+SharpNEAT 2.2.1
+2015-06-15
+Colin Green
+
+Changes from previous release (2.2.0).
+=====================================
+
+Fixes
+-----
+
+ * Performance: ZigguratGaussianSampler.cs: Switched SampleTail() to use NextDoubleNonZero() instead of NextDouble(),
+   to avoid attempt to compute Log(0). That wasn't a defect per se because Log() returns a NaN instead of throwing an
+   exception, but it did cause a slow execution path.
+
+
+ * FIX: FastAcyclicNetworkFactory.cs: Lookup of definition node index from a new/working index was wrong. The lookup
+   table used worked the other way around, i.e. it mapped definition indexes to new indexes. At this time this 
+   affected only the Walker 2D (Hyperneat) problem domain.
+   
+ * FIX: Box2dDomainView.Designer.cs: Added openGlControl.DestroyContexts() based on report of a blue screen failure 
+   on one box being remedied by this (almost certainly a video driver issue).
+   
+ * FIX: WalkerBox2dExperimentHyperNeat.cs: Nasty bug in setting of substrate node coordinates.
+ 
+ * FIX: FastRandom.cs: Seeds are now hashed. Without this the first random sample for nearby seeds (1,2,3, etc.) are
+   very similar (have a similar bit pattern). Thanks to Francois Guibert for identifying this problem.
+
