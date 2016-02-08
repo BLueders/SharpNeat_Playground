@@ -20,24 +20,22 @@
  * You should have received a copy of the GNU General Public License
  * along with SharpNEAT.  If not, see <http://www.gnu.org/licenses/>.
  */
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+using SharpNeat.Core;
+using SharpNeat.Decoders;
+using SharpNeat.Decoders.Neat;
+using SharpNeat.DistanceMetrics;
 using SharpNeat.Domains;
 using SharpNeat.EvolutionAlgorithms;
-using SharpNeat.Genomes.Neat;
-using SharpNeat.Decoders;
-using System.Threading.Tasks;
-using SharpNeat.Core;
 using SharpNeat.EvolutionAlgorithms.ComplexityRegulation;
-using SharpNeat.Decoders.Neat;
+using SharpNeat.Genomes.Neat;
 using SharpNeat.Phenomes;
-using SharpNeat.DistanceMetrics;
 using SharpNeat.SpeciationStrategies;
-using System.Xml;
 
-namespace TicTacToeEvolution
+namespace NeatSine
 {
     /// <summary>
     /// Helper class that hides most of the details of setting up an experiment.
@@ -80,7 +78,7 @@ namespace TicTacToeEvolution
         }
 
         /// <summary>
-        /// Gets the default population size to use for the experiment.
+        /// Gets the default population size to use for the experiment
         /// </summary>
         public int DefaultPopulationSize
         {
